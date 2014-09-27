@@ -304,7 +304,6 @@ var jaws = (function(jaws) {
    *
    */
   jaws.start = function(game_state, options, game_state_setup_options) {
-    console.log("inside jaws.start()");
 
     if (!options) options = {};
 
