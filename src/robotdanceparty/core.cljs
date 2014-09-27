@@ -2,4 +2,6 @@
 
 (enable-console-print!)
 
-(println "Hello world!")
+(defn ^:export main []
+  (println "Hello, Clojure Cup!"))
+
