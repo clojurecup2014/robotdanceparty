@@ -65,10 +65,14 @@
   (case dir
     "left" (do
              (aset entity "x" (- (aget entity "x") speed))
-             (.setImage entity (.next (aget entity "anim_left"))))
+             (.setImage entity (.next (aget entity "anim_left")))
+             (if-not (aget entity "flipped")
+               (.flip entity)))
     "right"(do
              (aset entity "x" (+ (aget entity "x") speed))
-             (.setImage entity (.next (aget entity "anim_right"))))
+             (.setImage entity (.next (aget entity "anim_right")))
+             (if (aget entity "flipped")
+               (.flip entity)))
     "up"   (do
              (aset entity "y" (- (aget entity "y") speed))
              (.setImage entity (.next (aget entity "anim_up"))))
@@ -97,19 +101,18 @@
     (swap! ticker inc)
 
     (.setImage player (.next (aget player "anim_default")))
+    (.setImage robot (.next (aget player "anim_default")))
 
     (if (.pressed js/jaws "left")
         (do
           (move player "left")
           (replay-add player "left")
-          (if-not (aget player "flipped")
-            (.flip player))))
+          ))
     (if (.pressed js/jaws "right")
         (do
           (move player "right")
           (replay-add player "right")
-          (if (aget player "flipped")
-            (.flip player))))
+          ))
     (if (.pressed js/jaws "up")
         (do
           (move player "up")
