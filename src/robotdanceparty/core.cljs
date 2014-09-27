@@ -10,10 +10,11 @@
 (def speed 2)
 (def game #js{})
 (def ticker (atom 0))
+(def recording (atom false))
+(def looping (atom false))
+(def loop-length (atom nil))
 
-(def robot #js {})
-
-
+(def robot nil)
 
 ; define game.setup()
 (aset game "setup"
@@ -31,12 +32,6 @@
                                  "scale" 2
                                  "anchor" "bottom_center"}))
 
-      (set! robot (.Sprite js/jaws
-                            #js {"x" 100
-                                 "y" 100
-                                 "scale" 2
-                                 "anchor" "bottom_center"}))
-
       ; setup player animations
       (aset player "anim_default" (.slice anim 0 3))
       (aset player "anim_up" (.slice anim 3 6))
@@ -44,19 +39,11 @@
       (aset player "anim_left" (.slice anim 3 6))
       (aset player "anim_right" (.slice anim 3 6))
 
-      (aset robot "anim_default" (.slice anim 0 3))
-      (aset robot "anim_up" (.slice anim 3 6))
-      (aset robot "anim_down" (.slice anim 3 6))
-      (aset robot "anim_left" (.slice anim 3 6))
-      (aset robot "anim_right" (.slice anim 3 6))
-
       ; setup player replay property
       (aset player "replay" {})
 
 
       (.setImage player (.next (aget player "anim_default")))
-
-      (.setImage robot (.next (aget robot "anim_default")))
 
       (.preventDefaultKeys js/jaws
                            #js ["up" "down" "left" "right" "space"]))))
@@ -92,16 +79,25 @@
                   (str @ticker)
                   #{dir})))))
 
-(print (aget player "replay"))
-
 ; define game.update()
 (aset game "update"
   (fn []
 
-    (swap! ticker inc)
+    (if (or @looping @recording) (swap! ticker inc))
 
     (.setImage player (.next (aget player "anim_default")))
-    (.setImage robot (.next (aget player "anim_default")))
+
+    (if (.pressedWithoutRepeat js/jaws "space")
+      (if @recording
+        (do
+          (println "recording: " (reset! recording false))
+
+          (reset! looping true)
+          (println "loop-length: " (reset! loop-length @ticker))
+          (reset! ticker 0)
+          )
+        (do
+          (println "recording: " (reset! recording true)))))
 
     (if (.pressed js/jaws "left")
         (do
@@ -132,21 +128,18 @@
                                  ". timer: "
                                  (/ @ticker 60)))))
 
-    (if (aget robot "replay")
-      (if-let [tick ((aget robot "replay") (str @ticker))]
-        (move robot (first tick))))
-
-    (if (> @ticker 600)
+    (if @looping
       (do
-        (reset! ticker 0)
-        (if-not (aget robot "replay")
-          (aset robot "replay"
-                (aget player "replay"))
-          ))
-      )
+        (if (aget player "replay")
+          (if-let [tick ((aget player "replay") (str @ticker))]
+            (move player (first tick))))
+        (if (> @ticker @loop-length) (reset! ticker 0))))
+
+
     ))
 
-(aget robot "replay")
+
+;(set! robot (.create js/Object player))
 
 ; define game.draw()
 (aset game "draw"
