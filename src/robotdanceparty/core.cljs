@@ -227,10 +227,6 @@
 (aset game "draw"
   (fn []
     (.clear js/jaws)
-    (if (aget hand "active")
-      (.draw hand))
-    (if (and (not (nil? player )) (aget player "active"))
-      (.draw player))
 
     (loop [robot-vec @robots]
       (if (empty? robot-vec)
@@ -238,6 +234,13 @@
         (do
           (.draw (first robot-vec))
           (recur (rest robot-vec)))))
+
+    (if (and (not (nil? player )) (aget player "active"))
+      (.draw player))
+
+    (if (aget hand "active")
+      (.draw hand))
+
 
 ;    (if (not (empty? @robots))
 ;      (.draw (@robots 0)))
