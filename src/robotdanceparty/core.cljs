@@ -3,5 +3,7 @@
 (enable-console-print!)
 
 (defn ^:export main []
-  (println "Hello, Clojure Cup!" js/jaws))
+  (println "Hello, Clojure Cup!")
+  (println (aget js/jaws "Sprite")))
+
 
