@@ -11,6 +11,16 @@ Hi, we're Plunger! Have this dancing robot for now! (Control with arrow keys)
 <br>
 
         <canvas width=500 height=300></canvas>
+        <div id="robot_select" style="position: fixed; left: 600; top: 0">
+            <img src="" style="width: 100; height: 100;"
+                 onClick="robotdanceparty.core.activate_hand(robotdanceparty.core.robot1, 'robot1')">
+            <br>
+            <img src="" style="width: 100; height: 100;"
+                 onClick="robotdanceparty.core.activate_hand(robotdanceparty.core.robot2, 'robot2')">
+            <br>
+            <img src="" style="width: 100; height: 100;"
+                 onClick="robotdanceparty.core.activate_hand(robotdanceparty.core.robot3, 'robot3')">
+        </div>
         FPS: <span id="fps"></span>
 
     </body>

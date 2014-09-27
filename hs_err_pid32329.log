@@ -1,0 +1,80 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 50331648 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2798), pid=32329, tid=139742656022272
+#
+# JRE version: OpenJDK Runtime Environment (7.0_65-b32) (build 1.7.0_65-b32)
+# Java VM: OpenJDK 64-Bit Server VM (24.65-b04 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f186c07a000):  VMThread [stack: 0x00007f185f4f4000,0x00007f185f5f5000] [id=32333]
+
+Stack: [0x00007f185f4f4000,0x00007f185f5f5000],  sp=0x00007f185f5f34e0,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x97b8c6]
+V  [libjvm.so+0x48c2b2]
+V  [libjvm.so+0x7ef57b]
+V  [libjvm.so+0x7e9cfe]
+V  [libjvm.so+0x85ba7b]
+V  [libjvm.so+0x85c933]
+V  [libjvm.so+0x85d04b]
+V  [libjvm.so+0x858a59]
+V  [libjvm.so+0x859238]
+V  [libjvm.so+0x811103]
+V  [libjvm.so+0x97d192]
+V  [libjvm.so+0x981a07]
+V  [libjvm.so+0x97fffb]
+V  [libjvm.so+0x9806a6]
+V  [libjvm.so+0x980b71]
+V  [libjvm.so+0x7ec282]
+
+VM_Operation (0x00007f1873706160): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00007f186c009000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f186c0b2800 JavaThread "Service Thread" daemon [_thread_blocked, id=32339, stack(0x00007f185ed64000,0x00007f185ee65000)]
+  0x00007f186c0b0000 JavaThread "C1 CompilerThread1" daemon [_thread_blocked, id=32338, stack(0x00007f185ee65000,0x00007f185ef66000)]
+  0x00007f186c0ad000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=32337, stack(0x00007f185ef66000,0x00007f185f067000)]
+  0x00007f186c0ab000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=32336, stack(0x00007f185f067000,0x00007f185f168000)]
+  0x00007f186c080800 JavaThread "Finalizer" daemon [_thread_blocked, id=32335, stack(0x00007f185f2f2000,0x00007f185f3f3000)]
+  0x00007f186c07e800 JavaThread "Reference Handler" daemon [_thread_blocked, id=32334, stack(0x00007f185f3f3000,0x00007f185f4f4000)]
+  0x00007f186c009000 JavaThread "main" [_thread_blocked, id=32330, stack(0x00007f187360d000,0x00007f187370e000)]
+
+Other Threads:
+=>0x00007f186c07a000 VMThread [stack: 0x00007f185f4f4000,0x00007f185f5f5000] [id=32333]
+  0x00007f186c0b5800 WatcherThread [stack: 0x00007f185ec63000,0x00007f185ed64000] [id=32340]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f186c0068f0] Threads_lock - owner thread: 0x00007f186c07a000
+[0x00007f186c006df0] Heap_lock - owner thread: 0x00007f186c009000
+
+Heap
+ PSYoungGen      total 53248K, used 2896K [0x00000000f0280000, 0x00000000f3a80000, 0x0000000100000000)
+  eden space 49152K, 0% used [0x00000000f0280000,0x00000000f0280000,0x00000000f3280000)
+  from space 4096K, 70% used [0x00000000f3280000,0x00000000f3554030,0x00000000f3680000)
+  to   space 4096K, 0% used [0x00000000f3680000,0x00000000f3680000,0x00000000f3a80000)
+ ParOldGen       total 32256K, used 6024K [0x00000000d0800000, 0x00000000d2780000, 0x00000000f0280000)
+  object space 32256K, 18% used [0x00000000d0800000,0x00000000d0de2120,0x00000000d2780000)
+ PSPermGen       total 23040K, used 22689K [0x00000000c6200000, 0x00000000c7880000, 0x00000000d0800000)
+  object space 23040K, 98% used [0x00000000c6200000,0x00000000c7828658,0x0
