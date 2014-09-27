@@ -15,6 +15,6 @@
               :compiler {
                 :output-to "robotdanceparty.js"
                 :output-dir "out"
-                :externs ["jaws.js"]
+                :externs ["jaws.js" "howler.js"]
                 :optimizations :none
                 :source-map true}}]})
