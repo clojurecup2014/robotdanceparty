@@ -16,22 +16,22 @@
     (println "in game setup")
 
     (let [anim (.Animation js/jaws
-                           #js {"sprite_sheet" "assets/droid.png"
+                           #js {"sprite_sheet" "assets/robot1_spritesheet.gif"
                                 "frame_duration" 100
-                                "frame_size" #js [11 15]})]
+                                "frame_size" #js [42 39]})]
       ;re-def global player
       (set! player (.Sprite js/jaws
                             #js {"x" 100
                                  "y" 100
-                                 "scale" 3
+                                 "scale" 2
                                  "anchor" "bottom_center"}))
 
       ; setup player animations
-      (aset player "anim_default" (.slice anim 0 5))
-      (aset player "anim_up" (.slice anim 6 8))
-      (aset player "anim_down" (.slice anim 8 10))
-      (aset player "anim_left" (.slice anim 10 12))
-      (aset player "anim_right" (.slice anim 12 14))
+      (aset player "anim_default" (.slice anim 0 3))
+      (aset player "anim_up" (.slice anim 3 6))
+      (aset player "anim_down" (.slice anim 3 6))
+      (aset player "anim_left" (.slice anim 3 6))
+      (aset player "anim_right" (.slice anim 3 6))
       (.setImage player (.next (aget player "anim_default")))
       (.preventDefaultKeys js/jaws
                            #js ["up" "down" "left" "right" "space"]))))
@@ -45,11 +45,15 @@
     (if (.pressed js/jaws "left")
         (do
           (aset player "x" (- (aget player "x") speed))
-          (.setImage player (.next (aget player "anim_left")))))
+          (.setImage player (.next (aget player "anim_left")))
+          (if-not (aget player "flipped")
+            (.flip player))))
     (if (.pressed js/jaws "right")
         (do
           (aset player "x" (+ (aget player "x") speed))
-          (.setImage player (.next (aget player "anim_right")))))
+          (.setImage player (.next (aget player "anim_right")))
+          (if (aget player "flipped")
+            (.flip player))))
     (if (.pressed js/jaws "up")
         (do
           (aset player "y" (- (aget player "y") speed))
@@ -59,8 +63,6 @@
           (aset player "y" (+ (aget player "y") speed))
           (.setImage player (.next (aget player "anim_down")))))
 
-
-    ;(.setImage player (.next (aget player "anim_default")))
     (let [fps (.getElementById js/document "fps")]
       (aset fps "innerHTML" (str (aget (aget js/jaws "game_loop") "fps")
                                  ". player: "
@@ -79,7 +81,7 @@
 (aset js/jaws "onload"
   (fn []
     (let [j-assets (aget js/jaws "assets")]
-      (.add j-assets "assets/droid.png")
+      (.add j-assets "assets/robot1_spritesheet.gif")
       (println "preloaded assets"))
     (.start js/jaws game)))
 
