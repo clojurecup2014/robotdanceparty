@@ -166,8 +166,8 @@
                          (aget player "ticker")))
           (aset player "ticker" 0)
           (swap! robots conj player)
-          (aset (first @robots) "x" (aget (first @robots) "init_x"))
-          (aset (first @robots) "y" (aget (first @robots) "init_y"))
+          (aset (last @robots) "x" (aget (last @robots) "init_x"))
+          (aset (last @robots) "y" (aget (last @robots) "init_y"))
 
           )
         (do
