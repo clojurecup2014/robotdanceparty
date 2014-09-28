@@ -13,6 +13,7 @@
 (def recording (atom false))
 (def looping (atom false))
 (def loop-length (atom nil))
+(def help)
 
 (def robots (atom []))
 
@@ -20,11 +21,14 @@
 (def ^:export robot2 nil)
 (def ^:export robot3 nil)
 
+help
+
 (def hand #js {})
 
 (defn ^:export activate-hand [anim robot]
   ; setup hand
   (println "calling activate-hand()")
+  (aset help "innerHTML" "Place your robot onto the dance floor.")
   (set! hand (.Sprite js/jaws
                       #js {"x" 50
                            "y" 50
@@ -41,6 +45,7 @@
                        #js ["up" "down" "left" "right" "space"]))
 
 (defn spawn-player [x y robot]
+  (aset help "innerHTML" "Dance with the arrow keys. Hit 'space' to begin recording your robot's moves.")
   (let [anim (case robot
                "robot1" robot1
                "robot2" robot2
@@ -70,6 +75,9 @@
 (aset game "setup"
   (fn []
     (println "in game setup")
+    (set! help (.getElementById js/document "help"))
+    (aset help "innerHTML" "Select a robot from the right side and place them onto to dance floor.")
+
     (set! robot1
           (.Animation js/jaws
                       #js {"sprite_sheet" "assets/robot1_spritesheet.gif"
@@ -159,6 +167,7 @@
       (if @recording
         (do
           (println "recording: " (reset! recording false))
+          (aset help "innerHTML" "Select another robot from the right side and place them onto to dance floor.")
           (aset player "active" false)
           (println "looping: " (reset! looping true))
           (println "loop-length: "
@@ -172,6 +181,7 @@
           )
         (do
           (println "recording: " (reset! recording true))
+          (aset help "innerHTML" "Hit 'space' again to stop recording.")
           (aset player "ticker" 0)
           (aset player "init_x" (aget player "x"))
           (aset player "init_y" (aget player "y"))
@@ -195,15 +205,7 @@
           (move player "down")
           (replay-add player "down")))
 
-    ;(if (not (nil? player ))
-    ;  (let [fps (.getElementById js/document "fps")]
-    ;    (aset fps "innerHTML" (str (aget (aget js/jaws "game_loop") "fps")
-    ;                             ". player: "
-    ;                             (aget player "x")
-    ;                             "/"
-    ;                             (aget player "y")))))
 
-    ;(if (or @recording @looping) (swap! ticker inc))
 
     (if @looping
       (loop [robot-vec @robots]
