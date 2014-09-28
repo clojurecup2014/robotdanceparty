@@ -10,18 +10,19 @@
 
         <div style="position:fixed; left:0">
             <form>
-                <select id="song" onClick="playBackgroundMusic(document.getElementById('song').selectedIndex)">
+                <select id="song">
                     <option value="Song1">Song1</option>
                     <option value="Song2">Song2</option>
                 </select>
                 <br>
-                <select name="tempo">
-                    <option value="slow">sloww</option>
-                    <option value="medium">medioium</option>
-                    <option value="fast">farst</option>
+                <select id="tempo">
+                    <option value="fast">fast</option>
+                    <option value="medium">medium</option>
+                    <option value="slow">slow</option>
                 </select>
             </form>
-            <form></form>
+            <button onClick="playBackgroundMusic(document.getElementById('song').selectedIndex,document.getElementById('tempo').selectedIndex)">Play</button>
+            <button onClick="stopBackgroundMusic()">Stop</button>
         </div>
         <div id="help" style="position:fixed; left: 100; top:480"></div>
         <canvas width=500 height=464 style="position:fixed; left:100"></canvas>
