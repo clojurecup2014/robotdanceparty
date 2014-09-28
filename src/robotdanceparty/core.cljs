@@ -6,7 +6,7 @@
   (println "Hello, Clojure Cup!"))
 
 ; 'declare' globals
-(def player nil)
+(def player)
 (def speed 2)
 (def game #js{})
 (def ticker (atom 0))
@@ -155,7 +155,7 @@
                       (aget hand "robot"))
         (aset hand "active" false)))
 
-    (if (.pressedWithoutRepeat js/jaws "space")
+    (if (and (.pressedWithoutRepeat js/jaws "space") (not (nil? player )) (aget player "active"))
       (if @recording
         (do
           (println "recording: " (reset! recording false))
@@ -195,13 +195,13 @@
           (move player "down")
           (replay-add player "down")))
 
-    (if (not (nil? player ))
-      (let [fps (.getElementById js/document "fps")]
-        (aset fps "innerHTML" (str (aget (aget js/jaws "game_loop") "fps")
-                                 ". player: "
-                                 (aget player "x")
-                                 "/"
-                                 (aget player "y")))))
+    ;(if (not (nil? player ))
+    ;  (let [fps (.getElementById js/document "fps")]
+    ;    (aset fps "innerHTML" (str (aget (aget js/jaws "game_loop") "fps")
+    ;                             ". player: "
+    ;                             (aget player "x")
+    ;                             "/"
+    ;                             (aget player "y")))))
 
     ;(if (or @recording @looping) (swap! ticker inc))
 
