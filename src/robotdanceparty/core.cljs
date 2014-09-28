@@ -23,6 +23,10 @@
 (def ^:export robot2 nil)
 (def ^:export robot3 nil)
 
+
+(def cup nil)
+
+(def parallax nil)
 (def bg-sprite nil)
 (def bg nil)
 
@@ -76,12 +80,39 @@ help
     ; setup player replay property
     (aset player "replay" {})))
 
+(.dir js/console parallax)
 ; define game.setup()
 (aset game "setup"
   (fn []
     (println "in game setup")
     (set! help (.getElementById js/document "help"))
     (aset help "innerHTML" "Select a robot from the right side and place them onto to dance floor.")
+
+
+    (set! cup (.Sprite js/jaws
+                      #js {"x" 70
+                           "y" 20
+                           "scale" 2
+                           "image" "assets/cup.gif"}))
+
+    (set! parallax (.Parallax js/jaws
+                              #js {"repeat_x" true
+                                   "camera_y" -40}))
+    (.addLayer parallax #js {"image" "assets/parallax1.gif"
+                             "damping" 2
+                             "scale" 2})
+    (.addLayer parallax #js {"image" "assets/parallax2.gif"
+                             "damping" .5
+                             "scale" 2})
+    (.addLayer parallax #js {"image" "assets/parallax3.gif"
+                             "damping" 1
+                             "scale" 2})
+    (.addLayer parallax #js {"image" "assets/parallax4.gif"
+                             "damping" 2
+                             "scale" .75})
+    (.addLayer parallax #js {"image" "assets/parallax4.gif"
+                             "damping" 1.2
+                             "scale" 2})
 
     (set! bg
           (.Animation js/jaws
@@ -169,6 +200,7 @@ help
   (fn []
 
     (.setImage bg-sprite (.next (aget bg-sprite "anim_default")))
+    (aset parallax "camera_x" (+ 2 (aget parallax "camera_x")))
 
     (if @recording (let [player-ticker (aget player "ticker")]
       (aset player "ticker" (inc player-ticker))))
@@ -261,7 +293,9 @@ help
 (aset game "draw"
   (fn []
     (.clear js/jaws)
+    (.draw cup)
     (.draw bg-sprite)
+    (.draw parallax)
     (loop [robot-vec @robots]
       (if (empty? robot-vec)
         nil ;(println "no more to draw")
@@ -288,6 +322,11 @@ help
       (.add j-assets "assets/robot2_spritesheet.gif")
       (.add j-assets "assets/robot3_spritesheet.gif")
       (.add j-assets "assets/bg_spritesheet.gif")
+      (.add j-assets "assets/cup.gif")
+      (.add j-assets "assets/parallax1.gif")
+      (.add j-assets "assets/parallax2.gif")
+      (.add j-assets "assets/parallax3.gif")
+      (.add j-assets "assets/parallax4.gif")
       (println "preloaded assets"))
     (.start js/jaws game)))
 
