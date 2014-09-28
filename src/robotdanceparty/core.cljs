@@ -14,6 +14,8 @@
 (def looping (atom false))
 (def loop-length (atom nil))
 (def help)
+(def top-bound 280)
+(def bot-bound 420)
 
 (def robots (atom []))
 
@@ -130,7 +132,14 @@ help
              (.setImage entity (.next (aget entity "anim_up"))))
     "down" (do
              (aset entity "y" (+ (aget entity "y") speed))
-             (.setImage entity (.next (aget entity "anim_down"))))))
+             (.setImage entity (.next (aget entity "anim_down")))))
+  (let [y-pos (aget entity "y")]
+    (if (< y-pos top-bound)
+      (aset entity "y" top-bound))
+
+    (if (> y-pos bot-bound)
+      (aset entity "y" bot-bound)))
+  )
 
 (defn replay-add [entity dir]
  (let [replay (aget entity "replay")
