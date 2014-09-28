@@ -208,6 +208,11 @@ help
           )
         (do
           (println "recording: " (reset! recording true))
+          (let [y-pos (aget player "y")]
+            (if (< y-pos top-bound)
+              (aset player "y" top-bound))
+            (if (> y-pos bot-bound)
+              (aset player "y" bot-bound)))
           (aset help "innerHTML" "Hit 'space' again to stop recording.")
           (aset player "ticker" 0)
           (aset player "init_x" (aget player "x"))
