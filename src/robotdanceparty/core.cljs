@@ -195,6 +195,8 @@ help
   (if (contains? dirs "down")
     (move robot "down")))
 
+
+
 ; define game.update()
 (aset game "update"
   (fn []
@@ -289,6 +291,16 @@ help
                 (aset (first robot-vec) "ticker" 0)))
             (recur (rest robot-vec))))))))
 
+(defn sort-robots [rob1 rob2]
+  (let [rob1-y (aget rob1 "y")
+        rob2-y (aget rob2 "y")]
+    (if (< rob1-y rob2-y)
+      true
+      false)))
+
+
+
+
 ; define game.draw()
 (aset game "draw"
   (fn []
@@ -296,7 +308,7 @@ help
     (.draw cup)
     (.draw bg-sprite)
     (.draw parallax)
-    (loop [robot-vec @robots]
+    (loop [robot-vec (sort sort-robots @robots)]
       (if (empty? robot-vec)
         nil ;(println "no more to draw")
         (do
