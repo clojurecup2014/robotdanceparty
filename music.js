@@ -1,7 +1,7 @@
 var background_music = []
 
 var song1_fast = new Howl({
-  urls: ['assets/techno_180.wav'],
+  urls: ['assets/techno_180.mp3', 'assets/techno_180.ogg'],
   loop: true,
   volume: .4,
   playing: false
@@ -10,7 +10,7 @@ var song1_fast = new Howl({
 background_music.push(song1_fast)
 
 var song2_fast = new Howl({
-  urls: ['assets/dnb_180.wav'],
+  urls: ['assets/dnb_180.mp3', 'assets/dnb_180.mp3'],
   loop: true,
   playing: false
 })
@@ -18,7 +18,7 @@ var song2_fast = new Howl({
 background_music.push(song2_fast)
 
 var song1_medium = new Howl({
-  urls: ['assets/techno_140.wav'],
+  urls: ['assets/techno_140.mp3', 'assets/techno_140.ogg'],
   loop: true,
   volume: .4,
   playing: false
@@ -27,7 +27,7 @@ var song1_medium = new Howl({
 background_music.push(song1_medium)
 
 var song2_medium = new Howl({
-  urls: ['assets/dnb_160.wav'],
+  urls: ['assets/dnb_160.mp3', 'assets/dnb_160.ogg'],
   loop: true,
   playing: false
 })
@@ -35,7 +35,7 @@ var song2_medium = new Howl({
 background_music.push(song2_medium)
 
 var song1_slow = new Howl({
-  urls: ['assets/techno_100.wav'],
+  urls: ['assets/techno_100.mp3', 'assets/techno_100.ogg'],
   loop: true,
   volume: .4,
   playing: false
@@ -44,7 +44,7 @@ var song1_slow = new Howl({
 background_music.push(song1_slow)
 
 var song2_slow = new Howl({
-  urls: ['assets/dnb_80.wav'],
+  urls: ['assets/dnb_80.mp3', 'assets/dnb_80.ogg'],
   loop: true,
   playing: false
 })
