@@ -86,7 +86,7 @@ help
   (fn []
     (println "in game setup")
     (set! help (.getElementById js/document "help"))
-    (aset help "innerHTML" "Select a robot from the right side and place them onto to dance floor.")
+    (aset help "innerHTML" "Select a robot from the right side and place them onto the dance floor.")
 
 
     (set! cup (.Sprite js/jaws
@@ -226,7 +226,7 @@ help
       (if @recording
         (do
           (println "recording: " (reset! recording false))
-          (aset help "innerHTML" "Select another robot from the right side and place them onto to dance floor.")
+          (aset help "innerHTML" "Select another robot from the right side and place them onto the dance floor.")
           (aset player "active" false)
           (println "looping: " (reset! looping true))
           (println "loop-length: "
