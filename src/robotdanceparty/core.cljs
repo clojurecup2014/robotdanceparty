@@ -21,6 +21,9 @@
 (def ^:export robot2 nil)
 (def ^:export robot3 nil)
 
+(def bg-sprite nil)
+(def bg nil)
+
 help
 
 (def hand #js {})
@@ -77,6 +80,19 @@ help
     (println "in game setup")
     (set! help (.getElementById js/document "help"))
     (aset help "innerHTML" "Select a robot from the right side and place them onto to dance floor.")
+
+    (set! bg
+          (.Animation js/jaws
+                      #js {"sprite_sheet" "assets/bg_spritesheet.gif"
+                           "frame_duration" 100
+                           "frame_size" #js [250 232]}))
+
+    (set! bg-sprite (.Sprite js/jaws
+                      #js {"x" 0
+                           "y" 0
+                           "scale" 2}))
+
+    (aset bg-sprite "anim_default" (.slice bg 0 3))
 
     (set! robot1
           (.Animation js/jaws
@@ -142,6 +158,8 @@ help
 ; define game.update()
 (aset game "update"
   (fn []
+
+    (.setImage bg-sprite (.next (aget bg-sprite "anim_default")))
 
     (if @recording (let [player-ticker (aget player "ticker")]
       (aset player "ticker" (inc player-ticker))))
@@ -229,7 +247,7 @@ help
 (aset game "draw"
   (fn []
     (.clear js/jaws)
-
+    (.draw bg-sprite)
     (loop [robot-vec @robots]
       (if (empty? robot-vec)
         nil ;(println "no more to draw")
@@ -255,6 +273,7 @@ help
       (.add j-assets "assets/robot1_spritesheet.gif")
       (.add j-assets "assets/robot2_spritesheet.gif")
       (.add j-assets "assets/robot3_spritesheet.gif")
+      (.add j-assets "assets/bg_spritesheet.gif")
       (println "preloaded assets"))
     (.start js/jaws game)))
 
